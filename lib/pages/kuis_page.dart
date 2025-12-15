@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class KuisPage extends StatefulWidget {
   const KuisPage({super.key});
@@ -25,6 +26,8 @@ class _KuisPageState extends State<KuisPage> with SingleTickerProviderStateMixin
   
   // Variable untuk mengontrol apakah kuis sudah dimulai
   bool _quizStarted = false;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   List<Map<String, dynamic>> allQuestions = [
     {
@@ -195,6 +198,7 @@ class _KuisPageState extends State<KuisPage> with SingleTickerProviderStateMixin
     WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     _animationController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -270,6 +274,11 @@ class _KuisPageState extends State<KuisPage> with SingleTickerProviderStateMixin
 
       if (option == quizQuestions[currentIndex]["answer"]) {
         score++;
+        // Putar suara benar
+        _audioPlayer.play(AssetSource('sounds/benar.mp3'));
+      } else {
+        // Putar suara salah
+        _audioPlayer.play(AssetSource('sounds/salah.mp3'));
       }
     });
   }
@@ -604,7 +613,6 @@ class _KuisPageState extends State<KuisPage> with SingleTickerProviderStateMixin
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -908,8 +916,6 @@ class _KuisPageState extends State<KuisPage> with SingleTickerProviderStateMixin
         const Text(
           "🎯 Quiz Time",
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
@@ -1254,14 +1260,6 @@ class _KuisPageState extends State<KuisPage> with SingleTickerProviderStateMixin
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.orange.shade50,
-              Colors.purple.shade50,
-            ],
-          ),
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(

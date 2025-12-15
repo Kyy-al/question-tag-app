@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-class MateriPage extends StatelessWidget {
+class MateriPage extends StatefulWidget {
   const MateriPage({super.key});
+
+  @override
+  State<MateriPage> createState() => _MateriPageState();
+}
+
+class _MateriPageState extends State<MateriPage> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  void _toggleAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+      setState(() => _isPlaying = false);
+    } else {
+      await _audioPlayer.play(AssetSource('sounds/materi.mp3'));
+      setState(() => _isPlaying = true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +49,7 @@ class MateriPage extends StatelessWidget {
             children: [
               // CUSTOM HEADER
               _buildHeader(context),
-              
+
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -41,7 +66,10 @@ class MateriPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // SECTION: Apa itu Tag Question
-                      _buildSectionTitle("Apa itu Tag Question?", Icons.quiz_rounded),
+                      _buildSectionTitle(
+                        "Apa itu Tag Question?",
+                        Icons.quiz_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildDefinitionCard(),
                       const SizedBox(height: 16),
@@ -60,7 +88,10 @@ class MateriPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // SECTION: Fungsi Tag Question
-                      _buildSectionTitle("Fungsi Tag Question 🎯", Icons.functions_rounded),
+                      _buildSectionTitle(
+                        "Fungsi Tag Question 🎯",
+                        Icons.functions_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildFunctionCard(),
 
@@ -74,14 +105,20 @@ class MateriPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // SECTION: Pola Dasar
-                      _buildSectionTitle("Pola Dasar Tag Question", Icons.pattern_rounded),
+                      _buildSectionTitle(
+                        "Pola Dasar Tag Question",
+                        Icons.pattern_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildPatternCard(),
 
                       const SizedBox(height: 24),
 
                       // SECTION: Positive → Negative
-                      _buildSectionTitle("Kalimat Positif → Tag Negatif", Icons.add_circle_outline_rounded),
+                      _buildSectionTitle(
+                        "Kalimat Positif → Tag Negatif",
+                        Icons.add_circle_outline_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildInfoBox(
                         "Jika kalimat utama positif, maka tag question-nya harus negatif (dengan menambahkan 'not').",
@@ -106,7 +143,9 @@ class MateriPage extends StatelessWidget {
                         Colors.green,
                       ),
                       const SizedBox(height: 12),
-                      _buildCategoryTitle("With MODAL (can, could, will, would, should, must)"),
+                      _buildCategoryTitle(
+                        "With MODAL (can, could, will, would, should, must)",
+                      ),
                       _buildExampleBox(
                         "They can swim, can't they?",
                         "Mereka bisa berenang, kan?",
@@ -138,7 +177,10 @@ class MateriPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // SECTION: Negative → Positive
-                      _buildSectionTitle("Kalimat Negatif → Tag Positif", Icons.remove_circle_outline_rounded),
+                      _buildSectionTitle(
+                        "Kalimat Negatif → Tag Positif",
+                        Icons.remove_circle_outline_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildInfoBox(
                         "Jika kalimat utama negatif, maka tag question-nya harus positif (tanpa 'not').",
@@ -146,7 +188,9 @@ class MateriPage extends StatelessWidget {
                         Colors.orange,
                       ),
                       const SizedBox(height: 12),
-                      _buildCategoryTitle("With BE (am not, isn't, aren't, wasn't, weren't)"),
+                      _buildCategoryTitle(
+                        "With BE (am not, isn't, aren't, wasn't, weren't)",
+                      ),
                       _buildExampleBox(
                         "He isn't tired, is he?",
                         "Dia tidak capek, kan?",
@@ -180,7 +224,9 @@ class MateriPage extends StatelessWidget {
                         Colors.orange,
                       ),
                       const SizedBox(height: 12),
-                      _buildCategoryTitle("With MODAL (can't, couldn't, won't, wouldn't, shouldn't)"),
+                      _buildCategoryTitle(
+                        "With MODAL (can't, couldn't, won't, wouldn't, shouldn't)",
+                      ),
                       _buildExampleBox(
                         "He can't drive, can he?",
                         "Dia tidak bisa mengemudi, kan?",
@@ -195,14 +241,20 @@ class MateriPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // SECTION: Tenses dalam Tag Question
-                      _buildSectionTitle("Tag Question pada Berbagai Tenses ⏰", Icons.access_time_rounded),
+                      _buildSectionTitle(
+                        "Tag Question pada Berbagai Tenses ⏰",
+                        Icons.access_time_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildTensesCard(),
 
                       const SizedBox(height: 24),
 
                       // SECTION: Special Cases
-                      _buildSectionTitle("Kasus Khusus ⚠️", Icons.warning_amber_rounded),
+                      _buildSectionTitle(
+                        "Kasus Khusus ⚠️",
+                        Icons.warning_amber_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildSpecialCaseCard(),
                       const SizedBox(height: 12),
@@ -213,21 +265,30 @@ class MateriPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // SECTION: Imperative Sentences
-                      _buildSectionTitle("Tag Question pada Kalimat Perintah", Icons.campaign_rounded),
+                      _buildSectionTitle(
+                        "Tag Question pada Kalimat Perintah",
+                        Icons.campaign_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildImperativeCard(),
 
                       const SizedBox(height: 24),
 
                       // SECTION: Let's
-                      _buildSectionTitle("Tag Question dengan Let's", Icons.group_rounded),
+                      _buildSectionTitle(
+                        "Tag Question dengan Let's",
+                        Icons.group_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildLetsCard(),
 
                       const SizedBox(height: 24),
 
                       // SECTION: Common Mistakes
-                      _buildSectionTitle("Kesalahan yang Sering Terjadi ❌", Icons.error_outline_rounded),
+                      _buildSectionTitle(
+                        "Kesalahan yang Sering Terjadi ❌",
+                        Icons.error_outline_rounded,
+                      ),
                       const SizedBox(height: 12),
                       _buildCommonMistakesCard(),
 
@@ -305,13 +366,19 @@ class MateriPage extends StatelessWidget {
                 ),
                 Text(
                   "Pelajari Tag Question Lengkap 📚",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
               ],
             ),
+          ),
+          IconButton(
+            onPressed: _toggleAudio,
+            icon: Icon(
+              _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+              color: Colors.blue.shade600,
+              size: 32,
+            ),
+            tooltip: _isPlaying ? 'Pause Audio' : 'Play Audio',
           ),
         ],
       ),
@@ -454,11 +521,7 @@ class MateriPage extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
             ),
-            const Icon(
-              Icons.menu_book_rounded,
-              size: 60,
-              color: Colors.white,
-            ),
+            const Icon(Icons.menu_book_rounded, size: 60, color: Colors.white),
           ],
         ),
         const SizedBox(height: 12),
@@ -554,11 +617,7 @@ class MateriPage extends StatelessWidget {
               ),
             ],
           ),
-          child: Icon(
-            icon,
-            color: Colors.blue.shade600,
-            size: 24,
-          ),
+          child: Icon(icon, color: Colors.blue.shade600, size: 24),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -656,21 +715,21 @@ class MateriPage extends StatelessWidget {
         "title": "Meminta Persetujuan",
         "desc": "Meminta lawan bicara untuk setuju dengan pernyataan kita",
         "example": "It's a nice day, isn't it?",
-        "color": Colors.blue
+        "color": Colors.blue,
       },
       {
         "icon": Icons.help_outline,
         "title": "Meminta Konfirmasi",
         "desc": "Memastikan kebenaran informasi yang kita sampaikan",
         "example": "You're coming tomorrow, aren't you?",
-        "color": Colors.green
+        "color": Colors.green,
       },
       {
         "icon": Icons.forum_outlined,
         "title": "Memulai Percakapan",
         "desc": "Membuka topik pembicaraan dengan lawan bicara",
         "example": "Nice weather today, isn't it?",
-        "color": Colors.orange
+        "color": Colors.orange,
       },
     ];
 
@@ -691,13 +750,13 @@ class MateriPage extends StatelessWidget {
           int index = entry.key;
           var func = entry.value;
           bool isLast = index == functions.length - 1;
-          
+
           return Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: isLast ? null : Border(
-                bottom: BorderSide(color: Colors.grey.shade200),
-              ),
+              border: isLast
+                  ? null
+                  : Border(bottom: BorderSide(color: Colors.grey.shade200)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -745,7 +804,10 @@ class MateriPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: (func["color"] as MaterialColor).shade50,
                           borderRadius: BorderRadius.circular(8),
@@ -810,13 +872,21 @@ class MateriPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildPatternItem("Positif (+)", "Negatif (-)", Colors.green),
+                    _buildPatternItem(
+                      "Positif (+)",
+                      "Negatif (-)",
+                      Colors.green,
+                    ),
                     Container(
                       width: 2,
                       height: 40,
                       color: Colors.grey.shade300,
                     ),
-                    _buildPatternItem("Negatif (-)", "Positif (+)", Colors.orange),
+                    _buildPatternItem(
+                      "Negatif (-)",
+                      "Positif (+)",
+                      Colors.orange,
+                    ),
                   ],
                 ),
               ],
@@ -859,27 +929,27 @@ class MateriPage extends StatelessWidget {
       {
         "icon": Icons.arrow_forward_rounded,
         "text": "Kalimat positif → tag negatif",
-        "color": Colors.green
+        "color": Colors.green,
       },
       {
         "icon": Icons.arrow_forward_rounded,
         "text": "Kalimat negatif → tag positif",
-        "color": Colors.orange
+        "color": Colors.orange,
       },
       {
         "icon": Icons.sync_rounded,
         "text": "Gunakan auxiliary verb yang sama dengan kalimat utama",
-        "color": Colors.blue
+        "color": Colors.blue,
       },
       {
         "icon": Icons.person_rounded,
         "text": "Gunakan subjek pronomina (you, he, she, they, it, we)",
-        "color": Colors.purple
+        "color": Colors.purple,
       },
       {
         "icon": Icons.schedule_rounded,
         "text": "Perhatikan tense yang digunakan dalam kalimat utama",
-        "color": Colors.teal
+        "color": Colors.teal,
       },
     ];
 
@@ -900,13 +970,13 @@ class MateriPage extends StatelessWidget {
           int index = entry.key;
           var rule = entry.value;
           bool isLast = index == rules.length - 1;
-          
+
           return Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: isLast ? null : Border(
-                bottom: BorderSide(color: Colors.grey.shade200),
-              ),
+              border: isLast
+                  ? null
+                  : Border(bottom: BorderSide(color: Colors.grey.shade200)),
             ),
             child: Row(
               children: [
@@ -988,19 +1058,22 @@ class MateriPage extends StatelessWidget {
           int index = entry.key;
           var tense = entry.value;
           bool isLast = index == tenses.length - 1;
-          
+
           return Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: isLast ? null : Border(
-                bottom: BorderSide(color: Colors.grey.shade200),
-              ),
+              border: isLast
+                  ? null
+                  : Border(bottom: BorderSide(color: Colors.grey.shade200)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.indigo.shade50,
                     borderRadius: BorderRadius.circular(8),
@@ -1017,7 +1090,11 @@ class MateriPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(Icons.add_circle, color: Colors.green.shade400, size: 16),
+                    Icon(
+                      Icons.add_circle,
+                      color: Colors.green.shade400,
+                      size: 16,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -1033,7 +1110,11 @@ class MateriPage extends StatelessWidget {
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    Icon(Icons.remove_circle, color: Colors.orange.shade400, size: 16),
+                    Icon(
+                      Icons.remove_circle,
+                      color: Colors.orange.shade400,
+                      size: 16,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -1516,10 +1597,7 @@ class MateriPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "🇮🇩 Tutup pintunya, ya?",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -1533,10 +1611,7 @@ class MateriPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "🇮🇩 Buka jendelanya, ya?",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -1620,10 +1695,7 @@ class MateriPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "🇮🇩 Ayo pergi ke taman, ya?",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -1637,10 +1709,7 @@ class MateriPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "🇮🇩 Ayo makan malam bersama, ya?",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -1656,22 +1725,22 @@ class MateriPage extends StatelessWidget {
       {
         "wrong": "She is beautiful, is she? ❌",
         "right": "She is beautiful, isn't she? ✅",
-        "reason": "Kalimat positif harus menggunakan tag negatif"
+        "reason": "Kalimat positif harus menggunakan tag negatif",
       },
       {
         "wrong": "They don't eat meat, don't they? ❌",
         "right": "They don't eat meat, do they? ✅",
-        "reason": "Kalimat negatif harus menggunakan tag positif"
+        "reason": "Kalimat negatif harus menggunakan tag positif",
       },
       {
         "wrong": "You likes coffee, don't you? ❌",
         "right": "You like coffee, don't you? ✅",
-        "reason": "Subject 'you' menggunakan verb bentuk dasar"
+        "reason": "Subject 'you' menggunakan verb bentuk dasar",
       },
       {
         "wrong": "I am late, am I not? ❌",
         "right": "I am late, aren't I? ✅",
-        "reason": "Tag question untuk 'I am' adalah 'aren't I?'"
+        "reason": "Tag question untuk 'I am' adalah 'aren't I?'",
       },
     ];
 
@@ -1692,13 +1761,13 @@ class MateriPage extends StatelessWidget {
           int index = entry.key;
           var mistake = entry.value;
           bool isLast = index == mistakes.length - 1;
-          
+
           return Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: isLast ? null : Border(
-                bottom: BorderSide(color: Colors.grey.shade200),
-              ),
+              border: isLast
+                  ? null
+                  : Border(bottom: BorderSide(color: Colors.grey.shade200)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1729,7 +1798,11 @@ class MateriPage extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.info_outline, color: Colors.amber.shade700, size: 16),
+                      Icon(
+                        Icons.info_outline,
+                        color: Colors.amber.shade700,
+                        size: 16,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -1801,11 +1874,17 @@ class MateriPage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          _buildTipItem("1. Perhatikan kata kerja bantu (auxiliary verb) di kalimat utama"),
+          _buildTipItem(
+            "1. Perhatikan kata kerja bantu (auxiliary verb) di kalimat utama",
+          ),
           _buildTipItem("2. Ingat pola: positif → negatif, negatif → positif"),
-          _buildTipItem("3. Pastikan tense tag question sama dengan kalimat utama"),
+          _buildTipItem(
+            "3. Pastikan tense tag question sama dengan kalimat utama",
+          ),
           _buildTipItem("4. Gunakan subjek pronomina yang sesuai"),
-          _buildTipItem("5. Latihan dengan berbagai contoh untuk pemahaman lebih baik"),
+          _buildTipItem(
+            "5. Latihan dengan berbagai contoh untuk pemahaman lebih baik",
+          ),
         ],
       ),
     );
