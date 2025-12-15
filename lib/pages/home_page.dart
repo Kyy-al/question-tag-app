@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'materi_page.dart';
+import 'chat_page.dart';
 import 'latihan_page.dart';
 import 'kuis_page.dart';
 import 'pembuat_page.dart';
@@ -57,8 +58,18 @@ class _HomePageState extends State<HomePage> {
             MateriPage(),
             LatihanPage(),
             KuisPage(),
-            PembuatPage(),
+            WordWondersGamePage(),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ChatPage()),
+            );
+          },
+          backgroundColor: Colors.indigo.shade600,
+          child: const Icon(Icons.chat_bubble_outline, color: Colors.white),
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(

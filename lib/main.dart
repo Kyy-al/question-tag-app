@@ -1,45 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'routes.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:tquestion_tag_app/pages/home_page.dart';
+import 'pages/chat_page.dart';
+
+const String apiKey = 'AIzaSyDRmr-qy3lN3RFoSHiLTRi9KQUDIJWkFQY';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const TagQuestionApp());
+
+  Gemini.init(
+    apiKey: apiKey,
+    enableDebugging: true,
+  );
+
+  runApp(const MyApp());
 }
 
-class TagQuestionApp extends StatelessWidget {
-  const TagQuestionApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Belajar Tag Question',
       debugShowCheckedModeBanner: false,
-
-      // Tema utama
+      title: 'Chat AI',
       theme: ThemeData(
         useMaterial3: true,
-        textTheme: GoogleFonts.interTextTheme(),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+        colorSchemeSeed: Colors.blue,
       ),
-
-      // Tema dark mode (opsional, saya gabungkan dari versi remote)
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        textTheme: GoogleFonts.interTextTheme(
-          ThemeData.dark().textTheme,
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.indigo,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
-
-      themeMode: ThemeMode.system,
-
-      initialRoute: '/',
-      onGenerateRoute: appRouteGenerator,
+      home: const HomePage(),
     );
   }
 }
